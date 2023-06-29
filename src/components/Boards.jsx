@@ -4,7 +4,7 @@ import BoardGrid from './BoardGrid'
 
 const Boards = () => {
   return (
-    <div className='w-full flex flex-col'>
+    <div className='w-full flex flex-col overflow-y-hidden'>
         <NavbarBoard />
         <BoardGrid />
     </div>

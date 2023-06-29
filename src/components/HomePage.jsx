@@ -7,7 +7,7 @@ const HomePage = () => {
         <>
             <Navbar/>
             <div>
-                <h1 className="title font-black text-pop-up-top text-gray-500 text-center md:mt-20 mt-80">
+                <h1 className="title font-black text-pop-up-top text-gray-500 text-center md:mt-20 mt-80 sm:text-9xl text-6xl">
                     Trellux
                 </h1>
             </div>

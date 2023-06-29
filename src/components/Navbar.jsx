@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import menu from '../assets/menu.svg';
-import close from '../assets/close.svg';
+import menu from '../assets/icons/menu.svg';
+import close from '../assets/icons/close.svg';
 import './css/Navbar.css';
 
 const navLinks = [
