@@ -161,9 +161,17 @@ const Register = () => {
                     </div>
 
                     <div>
+                        <div className="text-sm">
+                            <a
+                                href="/login"
+                                className="font-semibold text-indigo-600 hover:text-indigo-500"
+                            >
+                                I already have an account
+                            </a>
+                        </div>
                         <button
                             type="submit"
-                            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-10"
+                            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-4"
                             onClick={handleSignUp}
                         >
                             Sign me up!
