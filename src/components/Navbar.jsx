@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import menu from '../assets/menu.svg';
 import close from '../assets/close.svg';
+import './css/Navbar.css';
 
 const navLinks = [
     { path: '/', title: 'Home' },
@@ -9,7 +10,7 @@ const navLinks = [
 ];
 
 const Navbar = () => {
-    const [toggle, setToggle] = useState(false);
+    const [toggleMenu, setToggleMenu] = useState(false);
 
     return (
         <header className="w-full bg-gray-800 py-2 px-2 rounded-t">
@@ -38,17 +39,17 @@ const Navbar = () => {
 
                 <div className="sm:hidden flex flex-1 justify-end items-center">
                     <img
-                        src={toggle ? close : menu}
+                        src={toggleMenu ? close : menu}
                         alt="responsive menu"
                         className="w-[28px] h-[28px] object-contain mr-4"
                         onClick={() => {
-                            setToggle((prev) => !prev);
+                            setToggleMenu((prev) => !prev);
                         }}
                     />
 
                     <div
                         className={`${
-                            toggle ? 'flex' : 'hidden'
+                            toggleMenu ? 'flex' : 'hidden'
                         } p-6 bg-gray-800 absolute top-12 right-0 mx-0 my-2 min-w-[140px] rounded-bl-md sidebar`}
                     >
                         <ul className="list-none flex flex-col justify-end items-center flex-1">
