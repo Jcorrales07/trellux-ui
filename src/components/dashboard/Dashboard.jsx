@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from './Sidebar';
-import Boards from './Boards';
+import Boards from '../board/Boards';
 
 
 const Dashboard = () => (

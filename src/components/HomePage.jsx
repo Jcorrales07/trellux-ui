@@ -16,10 +16,14 @@ const HomePage = () => {
                 </h1>
             </div>
             <div className="flex justify-center mt-10 gap-4">
-                <img src={javascript} alt="" className="w-10 h-10" />
-                <img src={react} alt="" className="w-10 h-10" />
-                <img src={vite} alt="" className="w-10 h-10" />
-                <img src={tailwindcss} alt="" className="w-10 h-10" />
+                <img
+                    src={javascript}
+                    alt="javascript logo"
+                    className="w-10 h-10"
+                />
+                <img src={react} alt="react logo" className="w-10 h-10" />
+                <img src={vite} alt="vite logo" className="w-10 h-10" />
+                <img src={tailwindcss} alt="tail logo" className="w-10 h-10" />
             </div>
         </>
     );

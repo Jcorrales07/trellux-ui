@@ -1,11 +1,11 @@
 import React from 'react';
-import react from '../assets/icons/react.svg';
-import menu from '../assets/icons/menu.svg';
-import add from '../assets/icons/add.svg';
+import react from '../../assets/icons/react.svg';
+import menu from '../../assets/icons/menu.svg';
+import add from '../../assets/icons/add.svg';
 
 const NavbarBoard = () => {
     return (
-        <header className="w-full bg-gray-800  rounded-tr p-5 flex justify-between items-center">
+        <header className="w-full bg-gray-800 rounded-tr p-5 flex justify-between items-center">
             <div>
                 <img
                     // src={toggleSidebar ? close : menu}
@@ -18,15 +18,15 @@ const NavbarBoard = () => {
                     // }}
                 />
             </div>
-            <div className='flex gap-4'>
-                <div className='cursor-pointer'>
+            <div className="flex gap-4">
+                <div className="cursor-pointer">
                     <img
                         src={add}
                         alt="Create new board"
                         className="h-10 w-10 text-slate-600"
                     />
                 </div>
-                <div className='cursor-pointer'>
+                <div className="cursor-pointer">
                     <img
                         src={react}
                         alt="user avatar"

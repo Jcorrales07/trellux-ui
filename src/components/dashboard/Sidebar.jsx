@@ -1,6 +1,6 @@
 import React from 'react';
-import './css/Navbar.css';
-import tailwindcss from '../assets/icons/tailwindcss.svg';
+import '../css/Navbar.css';
+import tailwindcss from '../../assets/icons/tailwindcss.svg';
 
 const navLinks = [
     { title: 'Dashboard', active: true },
@@ -48,9 +48,12 @@ const Sidebar = () => {
                 </div>
             </div>
             <div>
-                <button className="bg-indigo-600 text-white rounded-lg px-4 py-2 w-full button" onClick={() => {
-                    window.location.href = '/';
-                }}>
+                <button
+                    className="bg-indigo-600 text-white rounded-lg px-4 py-2 w-full button"
+                    onClick={() => {
+                        window.location.href = '/';
+                    }}
+                >
                     Logout
                 </button>
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import BoardCard from './BoardCard';
-import './css/BoardGrid.css';
+import '../css/BoardGrid.css';
 
 // Usar la api de unsplash para hacer el background de los boards
 
@@ -105,13 +105,18 @@ const boards = [
         title: 'Board #5',
         date: new Date().toDateString(),
     },
-]
+];
 
 const BoardGrid = () => {
     return (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 auto-rows-max gap-5 justify-items-stretch h-[91vh] overflow-x-hidden p-5 scrollbar scrollbar-thumb-slate-500 scrollbar-w-2 scrollbar-rounded ">
+        <div id='scrollbarRounded' className="grid sm:grid-cols-2 lg:grid-cols-3 auto-rows-max gap-5 justify-items-stretch h-[91vh] overflow-x-hidden p-5 scrollbar scrollbar-thumb-slate-700 scrollbar-w-2">
             {boards.map((board, index) => (
-                <BoardCard key={index} title={board.title} date={board.date} />
+                <BoardCard
+                    key={index}
+                    title={board.title}
+                    date={board.date}
+                    boardId={index}
+                />
             ))}
         </div>
     );
