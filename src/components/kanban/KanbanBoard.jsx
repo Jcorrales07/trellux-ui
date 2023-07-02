@@ -2,6 +2,7 @@ import React from 'react';
 import NavbarKanban from './NavbarKanban';
 import KanbanGrid from './KanbanGrid';
 import NavbarBoard from '../board/NavbarBoard';
+import { DndContext } from '@dnd-kit/core';
 
 const KanbanBoard = () => {
     // traer la info del kanban con el id que se pasa por parametro en la url

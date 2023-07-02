@@ -16,10 +16,9 @@ const NavbarKanban = ({ kanbanName }) => {
 
     return (
         <header className="w-full bg-slate-950 bg-opacity-50 rounded-tr px-5 py-2 flex justify-between items-center">
-            {/* <div className="m-auto flex justify-between w-full h-full items-center"> */}
                 <input
                     type="text"
-                    className={`text-white font-bold text-lg  hover:bg-slate-700 px-2 py-2 rounded-md cursor-pointer bg-transparent focus:outline-none focus:outline-indigo-500 focus:bg-slate-700 transition duration-300 ease-in-out magic-input text-start`}
+                    className={`text-white font-bold text-lg  hover:bg-slate-700 p-2 rounded-md cursor-pointer bg-transparent focus:outline-none focus:outline-indigo-500 focus:bg-slate-700 transition duration-300 ease-in-out magic-input text-start`}
                     onChange={(e) => {
                         setName(e.target.value);
                     }}
@@ -33,7 +32,6 @@ const NavbarKanban = ({ kanbanName }) => {
                     <img src={add} alt="" className="w-3" />
                     <p className="ml-2">Add another list</p>
                 </button>
-            {/* </div> */}
         </header>
     );
 };
