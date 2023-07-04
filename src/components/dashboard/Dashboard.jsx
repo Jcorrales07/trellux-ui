@@ -6,7 +6,7 @@ import NavbarBoard from '../board/NavbarBoard';
 const Dashboard = () => (
     <>
         <NavbarBoard />
-        <div className='flex flex-row max-w-screen-xl m-auto '>
+        <div className='relative flex flex-row max-w-screen-xl m-auto '>
             <Sidebar />
             <Boards />
         </div>

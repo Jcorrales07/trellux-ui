@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const BoardCard = ({ title, date, boardId }) => {
+const BoardCard = ({ title, date, boardId, bgPhoto }) => {
     const navigate = useNavigate();
 
     return (
         <div
-            className="cursor-pointer h-40 rounded-md bg-gradient-to-r from-slate-800 to-slate-500 bg-no-repeat bg-cover relative"
+            className="cursor-pointer h-44 rounded-md bg-gradient-to-r from-slate-800 to-slate-500 bg-no-repeat bg-cover relative"
             onClick={() => {
                 navigate(`/board/${boardId}`)
             }}

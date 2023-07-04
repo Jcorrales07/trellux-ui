@@ -3,17 +3,22 @@ import NavbarKanban from './NavbarKanban';
 import KanbanGrid from './KanbanGrid';
 import NavbarBoard from '../board/NavbarBoard';
 import { DndContext } from '@dnd-kit/core';
+import { useParams } from 'react-router-dom';
 
 const KanbanBoard = () => {
     // traer la info del kanban con el id que se pasa por parametro en la url
     // Para poder llenar el navbar
+    const kanbanId = useParams().boardId;
 
-    const name = 'Kanban name';
+    const getKanbanInfo = () => {
+        //Fetch kanban with id 'kanbanId'
+    };
+    const kanban = { name: 'Kanban name' }; //getKanbanInfo();
 
     return (
-        <div className="m-auto">
+        <div className="m-auto max-h-[100vh]">
             <NavbarBoard />
-            <NavbarKanban kanbanName={name} />
+            <NavbarKanban kanban={kanban} />
             <KanbanGrid />
         </div>
     );

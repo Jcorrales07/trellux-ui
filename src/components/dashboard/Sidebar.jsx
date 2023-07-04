@@ -14,8 +14,8 @@ const navLinks = [
 const Sidebar = () => {
     const [isCreateBoard, setIsCreateBoard] = useState(false);
     return (
-        <div className="sm:flex hidden flex-col justify-between max-w-[320px] sm:min-w-[230px] md:min-w-[288px] p-5 font-medium">
-            <div className="w-full">
+        <div id='sidebar' className="md:static md:bg-transparent md:h-auto flex  flex-col justify-between  sm:min-w-[230px] md:min-w-[288px] p-5 font-medium absolute z-10 bg-slate-900 h-[92.3vh]">
+            <div className="w-full min-w-[230px]">
                 <nav>
                     <ul>
                         {navLinks.map((link, i) => (

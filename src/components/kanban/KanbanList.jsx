@@ -1,23 +1,34 @@
 import React, { useState } from 'react';
 import KanbanCard from './KanbanCard';
-import add from '../../assets/icons/plus-line-icon.svg';
 import { DndContext, closestCenter, useDroppable } from '@dnd-kit/core';
 import {
     SortableContext,
     arrayMove,
     verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import close from '../../assets/icons/close.svg';
 
-const KanbanList = ({ list }) => {
-    const { isOver, setNodeRef } = useDroppable({
-        id: list.id,
-    });
-    const [listName, setListName] = useState(list.name);
-    const [cards, setCards] = useState([
-        { id: 1, name: 'k1' },
-        { id: 2, name: 'k2' },
-        { id: 3, name: 'k3' },
-    ]);
+const KanbanList = ({ list, isAddCard, setIsAddCard }) => {
+    const { isOver, setNodeRef } = useDroppable({ id: list.id });
+
+    // el array de cards
+    const [cards, setCards] = useState(list.cards);
+
+    //Creacion de la targeta
+    const [newCard, setNewCard] = useState('');
+
+    const createCard = () => {
+        if (!newCard) return;
+        setCards((prev) => [
+            ...prev,
+            {
+                // el id tiene que cambiar
+                id: Date.now(),
+                name: newCard,
+            },
+        ]);
+        setNewCard('');
+    };
 
     const style = {
         backgroundColor: isOver ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
@@ -35,39 +46,67 @@ const KanbanList = ({ list }) => {
     };
 
     return (
-        <div className="min-w-[300px] rounded-xl p-5 text-white bg-slate-950 h-max">
-            <div className="listName mb-5 w-full">
-                <input
-                    type="text"
-                    className="bg-transparent w-full px-2 text-base font-bold focus:outline-none focus:outline-indigo-600 rounded-md"
-                    value={listName}
-                    onChange={(e) => {
-                        setListName(e.target.value);
-                    }}
-                />
-            </div>
-            <div>
-                <DndContext
-                    collisionDetection={closestCenter}
-                    onDragEnd={handleDragEnd}
+        <DndContext
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+        >
+            {/* className='overflow-scroll overflow-x-hidden scrollbar-thin scrollbar-w-1' */}
+            <div
+                ref={setNodeRef}
+                style={style}
+                id="scrollbarRounded"
+                //overflow-x-hidden scrollbar-track-gray-800 scrollbar-thin scrollbar-w-1.5 scrollbar-track-rounded-full max-h-[66vh]
+                className=" max-w-[300px] "
+            >
+                <SortableContext
+                    items={cards}
+                    strategy={verticalListSortingStrategy}
                 >
-                    <div ref={setNodeRef} style={style} className='border'>
-                        <SortableContext
-                            items={cards}
-                            strategy={verticalListSortingStrategy}
-                        >
-                            {cards.map((card, i) => (
-                                <KanbanCard key={i} card={card} />
-                            ))}
-                        </SortableContext>
-                    </div>
-                </DndContext>
+                    {cards.map((card, i) => (
+                        <KanbanCard key={i} card={card} />
+                    ))}
+
+                    {/* Create new card function */}
+                    {isAddCard ? (
+                        <div className="mr-1">
+                            <input
+                                type="text"
+                                size={1}
+                                className="text-white p-3 rounded-md bg-slate-700 hover:bg-slate-600 cursor-pointer mb-2 w-full focus:outline-none"
+                                placeholder="Enter a title for this card..."
+                                value={newCard}
+                                onChange={(e) => setNewCard(e.target.value)}
+                                onKeyUpCapture={(e) => {
+                                    if (e.key === 'Enter') createCard();
+                                    return;
+                                }}
+                            />
+                            <div className="flex">
+                                <button
+                                    className="text-white px-5 py-2 rounded-md bg-indigo-700 mr-5"
+                                    onClick={createCard}
+                                >
+                                    Add Card
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setIsAddCard(false);
+                                        setNewCard('');
+                                    }}
+                                >
+                                    <img
+                                        src={close}
+                                        alt="cancel creation card"
+                                    />
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                </SortableContext>
             </div>
-            <div className="addNewCard w-full flex px-2 py-[.2rem] rounded-md hover:bg-slate-700 hover:text-white text-slate-500 cursor-pointer mt-5">
-                <img src={add} alt="" className="w-3 mr-2" />
-                Add a card
-            </div>
-        </div>
+        </DndContext>
     );
 };
 
