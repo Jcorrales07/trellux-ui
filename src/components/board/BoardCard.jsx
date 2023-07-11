@@ -16,7 +16,7 @@ const BoardCard = ({ title, date, boardId, bgPhoto }) => {
             <span
                 className="absolute top-3 left-2 pl-3 pb-2 text-white"
                 style={{
-                    textShadow: '0px 0px 10px rgba(0, 0, 0, 0.9)',
+                    textShadow: '0px 0px 10px rgba(0, 0, 0, 1)',
                 }}
             >
                 <h1 className="font-bold text-2xl">{title}</h1>

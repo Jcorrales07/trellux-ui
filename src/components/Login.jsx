@@ -34,12 +34,15 @@ const Login = () => {
             return
         }
 
-        const userLogin = await clientTrelluxApi
+        const userReq = await clientTrelluxApi
             .post('/users/login', clientReq)
             .then((res) => res.data)
             .catch((e) => e)
 
-        if (!userLogin.success) {
+        // guardar el user en REDUX
+        const userLogin = userReq.user
+
+        if (!userReq.success) {
             // show error REACT TOAST
             toast.error(userLogin.message, {
                 position: 'top-right',

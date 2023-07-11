@@ -37,7 +37,7 @@ const boards = [
 ]
 
 const getPhotos = async () => {
-    return (await clientUnSplash.get('/photos?per_page=100')).data
+    return (await clientUnSplash.get('/photos?per_page=30')).data
 }
 
 const photos = await getPhotos()

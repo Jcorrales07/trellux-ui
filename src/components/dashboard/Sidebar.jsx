@@ -17,6 +17,7 @@ const Sidebar = () => {
     const [board, setBoard] = useState({
         title: '',
         description: '',
+        username: 'jcorralesss',
     })
 
     const getInfo = (e) => {
@@ -98,11 +99,20 @@ const Sidebar = () => {
                                     e.preventDefault()
 
                                     console.log('board', board)
-                                    // clientTrelluxApi.post('/boards', board)
+
+                                    // aca se manda a la base de datos
+                                    clientTrelluxApi
+                                        .post('/boards', board)
+                                        .then((res) => console.log(res.data))
+
+                                    // pero tengo que hacer que se renderice el nuevo board
+                                    // Entonces lo voy a guardar en el array de boards en redux y asi se renderiza
+                                    // REDUX PROCEDURE
 
                                     setBoard({
                                         title: '',
                                         description: '',
+                                        username: 'jcorralesss',
                                     })
                                     setIsCreateBoard((prev) => !prev)
 
