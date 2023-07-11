@@ -1,22 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import { clientTrelluxApi } from '../../axios.config'
+import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 const Login = () => {
-    const [user, setUser] = useState('');
-    const [password, setPassword] = useState('');
+    const navigate = useNavigate()
+    const [user, setUser] = useState({
+        username: '',
+        password: '',
+    })
 
-    const onChangeUserInput = (e) => {
-        setUser(e.target.value);
-    };
+    const getInfo = (e) => {
+        setUser({
+            ...user,
+            [e.target.name]: e.target.value,
+        })
+    }
 
-    const onChangePasswordInput = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const handleLogin = (e) => {
-        e.preventDefault();
+    const handleLogin = async (e) => {
+        e.preventDefault()
 
         // Logica para hacer el login
-    };
+
+        const clientReq = {
+            username: user.username,
+            password: user.password,
+        }
+
+        if (clientReq.username === '' || clientReq.password === '') {
+            toast.error('Please fill all the fields', {
+                position: 'top-right',
+            })
+            return
+        }
+
+        const userLogin = await clientTrelluxApi
+            .post('/users/login', clientReq)
+            .then((res) => res.data)
+            .catch((e) => e)
+
+        if (!userLogin.success) {
+            // show error REACT TOAST
+            toast.error(userLogin.message, {
+                position: 'top-right',
+            })
+            return
+        }
+
+        setUser({
+            username: '',
+            password: '',
+        })
+
+        // Guardar el token en el local storage
+        toast.success('Login Successfully!', {
+            position: 'bottom-right',
+        })
+        localStorage.setItem('accessToken', userLogin.accessToken)
+        navigate('/dashboard')
+    }
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -42,13 +84,13 @@ const Login = () => {
                         </label>
                         <div className="mt-2">
                             <input
-                                id="user"
-                                name="user"
-                                type="user"
-                                autoComplete="user"
+                                id="username"
+                                name="username"
+                                type="username"
+                                autoComplete="username"
                                 required
-                                onChange={onChangeUserInput}
-                                value={user}
+                                onChange={getInfo}
+                                value={user.username}
                                 className="block w-full rounded-md bg- border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2 bg-slate-900"
                             />
                         </div>
@@ -78,8 +120,8 @@ const Login = () => {
                                 type="password"
                                 autoComplete="current-password"
                                 required
-                                onChange={onChangePasswordInput}
-                                value={password}
+                                onChange={getInfo}
+                                value={user.password}
                                 className="block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2 bg-slate-900"
                             />
                         </div>
@@ -105,7 +147,7 @@ const Login = () => {
                 </form>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Login;
+export default Login

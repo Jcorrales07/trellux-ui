@@ -1,7 +1,7 @@
-import React from 'react';
-import BoardCard from './BoardCard';
-import '../css/BoardGrid.css';
-import { client } from '../../../axios.config';
+import React from 'react'
+import BoardCard from './BoardCard'
+import '../css/BoardGrid.css'
+import { clientUnSplash } from '../../../axios.config'
 
 // Usar la api de unsplash para hacer el background de los boards
 
@@ -34,39 +34,33 @@ const boards = [
         title: 'Board #4',
         date: new Date().toDateString(),
     },
-];
+]
+
+const getPhotos = async () => {
+    return (await clientUnSplash.get('/photos?per_page=100')).data
+}
+
+const photos = await getPhotos()
 
 const BoardGrid = () => {
-
-    let photos = []
-
-    const getPhotos = async () => {
-        const response = await client.get('/photos?per_page=30')
-        const data = await response.data
-        photos = [...data]
-        console.log(photos)
-    }
-
-    getPhotos()
-
-    console.log(photos)
-
-
     return (
         <div
             id="scrollbarRounded"
             className="grid sm:grid-cols-2 lg:grid-cols-3 auto-rows-max gap-5 justify-items-stretch h-[91vh] overflow-x-hidden p-5 scrollbar scrollbar-thumb-slate-700 scrollbar-w-2"
         >
             {boards.map((board, index) => {
-                return <BoardCard
-                    key={index}
-                    title={board.title}
-                    date={board.date}
-                    boardId={index}
-                />
+                return (
+                    <BoardCard
+                        key={index}
+                        title={board.title}
+                        date={board.date}
+                        bgPhoto={photos[index].urls.regular}
+                        boardId={index}
+                    />
+                )
             })}
         </div>
-    );
-};
+    )
+}
 
-export default BoardGrid;
+export default BoardGrid

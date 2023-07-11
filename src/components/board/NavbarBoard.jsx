@@ -1,21 +1,32 @@
-import React, { useState } from 'react';
-import react from '../../assets/icons/react.svg';
-import menu from '../../assets/icons/menu.svg';
-import add from '../../assets/icons/add.svg';
-import close from '../../assets/icons/close.svg';
-import tailwindcss from '../../assets/icons/tailwindcss.svg';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import react from '../../assets/icons/react.svg'
+import menu from '../../assets/icons/menu.svg'
+import add from '../../assets/icons/add.svg'
+import close from '../../assets/icons/close.svg'
+import tailwindcss from '../../assets/icons/tailwindcss.svg'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-hot-toast'
 
 const userLinks = [
     { title: 'Your Profile', path: '/profile' },
     { title: 'Settings', path: '/settings' },
     { title: 'Sign out', path: '/login' },
-];
+]
 
 const NavbarBoard = () => {
-    const navigate = useNavigate();
-    const [toggleUserMenu, setToggleUserMenu] = useState(false);
-    const [wasClicked, setWasClicked] = useState(false);
+    const navigate = useNavigate()
+    const [toggleUserMenu, setToggleUserMenu] = useState(false)
+    const [wasClicked, setWasClicked] = useState(false)
+
+    const handleLogout = (link) => {
+        localStorage.removeItem('accessToken')
+        toast.success('You Logout!', {
+            position: 'bottom-right',
+            icon: '👋'
+        })
+        navigate(link.path)
+    }
+
     return (
         <header className="w-full bg-gray-800 rounded-tr px-5 py-3 flex justify-between items-center">
             <div>
@@ -24,16 +35,16 @@ const NavbarBoard = () => {
                     alt="menu icon"
                     className="w-[28px] h-[28px] object-contain mr-4 md:hidden block"
                     onClick={() => {
-                        const sidebar = document.getElementById('sidebar');
-                        sidebar.classList.toggle('hidden');
-                        setWasClicked((prev) => !prev);
+                        const sidebar = document.getElementById('sidebar')
+                        sidebar.classList.toggle('hidden')
+                        setWasClicked((prev) => !prev)
                     }}
                 />
                 <div>
                     <img
                         className="h-9 w-auto md:block hidden"
                         onClick={() => {
-                            navigate('/dashboard');
+                            navigate('/dashboard')
                         }}
                         src={tailwindcss}
                         alt="Your Company"
@@ -61,7 +72,11 @@ const NavbarBoard = () => {
                         {userLinks.map((link, i) => (
                             <div
                                 key={i}
-                                onClick={() => navigate(link.path)}
+                                onClick={() => {
+                                    link.path === '/login'
+                                        ? handleLogout(link)
+                                        : navigate(link.path)
+                                }}
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-700 hover:text-white"
                             >
                                 {link.title}
@@ -73,7 +88,7 @@ const NavbarBoard = () => {
                 )}
             </div>
         </header>
-    );
-};
+    )
+}
 
-export default NavbarBoard;
+export default NavbarBoard

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import '../css/Navbar.css';
-import add from '../../assets/icons/plus-line-icon.svg';
+import React, { useState } from 'react'
+import '../css/Navbar.css'
+import add from '../../assets/icons/plus-line-icon.svg'
+import { clientTrelluxApi } from '../../../axios.config'
 
 const navLinks = [
     { title: 'Boards', active: true },
@@ -9,12 +10,24 @@ const navLinks = [
     { title: 'Calendar', active: false },
     { title: 'Documents', active: false },
     { title: 'Reports', active: false },
-];
+]
 
 const Sidebar = () => {
-    const [isCreateBoard, setIsCreateBoard] = useState(false);
+    const [isCreateBoard, setIsCreateBoard] = useState(false)
+    const [board, setBoard] = useState({
+        title: '',
+        description: '',
+    })
+
+    const getInfo = (e) => {
+        setBoard((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    }
+
     return (
-        <div id='sidebar' className="md:static md:bg-transparent md:h-auto flex  flex-col justify-between  sm:min-w-[230px] md:min-w-[288px] p-5 font-medium absolute z-10 bg-slate-900 h-[92.3vh]">
+        <div
+            id="sidebar"
+            className="md:static md:bg-transparent md:h-auto flex  flex-col justify-between  sm:min-w-[230px] md:min-w-[288px] p-5 font-medium absolute z-10 bg-slate-900 h-[92.3vh]"
+        >
             <div className="w-full min-w-[230px]">
                 <nav>
                     <ul>
@@ -54,8 +67,10 @@ const Sidebar = () => {
 
                                 <input
                                     type="text"
-                                    name="boardtitle"
+                                    name="title"
                                     className="bg-transparent rounded-md focus:outline-none focus:outline-indigo-500 ring-2 ring-indigo-900 px-2"
+                                    onChange={getInfo}
+                                    value={board.title}
                                 />
                             </div>
 
@@ -67,19 +82,29 @@ const Sidebar = () => {
                                     Board Description
                                 </label>
                                 <textarea
-                                    name="boarddescription"
+                                    name="description"
                                     id=""
                                     cols="10"
                                     rows="3"
                                     className="focus:outline-none focus:outline-indigo-500 bg-transparent rounded-md ring-2 ring-indigo-900 px-2"
+                                    onChange={getInfo}
+                                    value={board.description}
                                 ></textarea>
                             </div>
 
                             <button
                                 type="button"
                                 onClick={(e) => {
-                                    e.preventDefault();
-                                    setIsCreateBoard((prev) => !prev);
+                                    e.preventDefault()
+
+                                    console.log('board', board)
+                                    // clientTrelluxApi.post('/boards', board)
+
+                                    setBoard({
+                                        title: '',
+                                        description: '',
+                                    })
+                                    setIsCreateBoard((prev) => !prev)
 
                                     // Voy a tomar la info
                                     // Mandarla al backend
@@ -100,7 +125,7 @@ const Sidebar = () => {
             <button
                 className="bg-indigo-600 text-white rounded-lg px-4 py-2 w-full button"
                 onClick={() => {
-                    setIsCreateBoard((prev) => !prev);
+                    setIsCreateBoard((prev) => !prev)
                 }}
             >
                 {isCreateBoard ? (
@@ -119,7 +144,7 @@ const Sidebar = () => {
                 )}
             </button>
         </div>
-    );
-};
+    )
+}
 
-export default Sidebar;
+export default Sidebar

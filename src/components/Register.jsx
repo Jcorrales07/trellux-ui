@@ -1,28 +1,42 @@
-import React, { useState } from 'react';
-// import axios from 'axios';
+import React, { useState } from 'react'
+import { clientTrelluxApi } from '../../axios.config'
+import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
+    const navigate = useNavigate()
     const [newUser, setNewUser] = useState({
         name: '',
         lastname: '',
         username: '',
         email: '',
         password: '',
-    });
+    })
 
     const getInfo = (e) => {
         setNewUser({
             ...newUser,
             [e.target.name]: e.target.value,
-        });
-    };
+        })
+    }
 
-    const handleSignUp = (e) => {
-        e.preventDefault();
-        console.log(newUser);
+    const handleSignUp = async (e) => {
+        e.preventDefault()
+        console.log(newUser)
 
-        // axios.post('url')
-    };
+        // sending info
+        const isCreated = await clientTrelluxApi
+            .post('/users/register', newUser)
+            .then((res) => res.data)
+            .catch((e) => e)
+
+        if (!isCreated.success) {
+            // show error REACT TOAST
+            return
+        }
+
+        setNewUser({})
+        navigate('/login')
+    }
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -180,7 +194,7 @@ const Register = () => {
                 </form>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Register;
+export default Register
