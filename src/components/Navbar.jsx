@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import menu from '../assets/icons/menu.svg';
-import close from '../assets/icons/close.svg';
+import { menuIcon, closeIcon, tailwindcssIcon } from '../assets/icons';
 import './css/Navbar.css';
 
 const navLinks = [
@@ -21,7 +20,7 @@ const Navbar = () => {
                     <div className="ml-4">
                         <img
                             className="h-10 w-auto"
-                            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                            src={tailwindcssIcon}
                             alt="Your Company"
                         />
                     </div>
@@ -44,8 +43,8 @@ const Navbar = () => {
 
                     <div className="sm:hidden flex flex-1 justify-end items-center">
                         <img
-                            src={toggleMenu ? close : menu}
-                            alt="responsive menu"
+                            src={toggleMenu ? closeIcon : menuIcon}
+                            alt="responsive menuIcon"
                             className="w-[28px] h-[28px] object-contain mr-4"
                             onClick={() => {
                                 setToggleMenu((prev) => !prev);

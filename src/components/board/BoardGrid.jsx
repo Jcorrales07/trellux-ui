@@ -2,6 +2,7 @@ import React from 'react'
 import BoardCard from './BoardCard'
 import '../css/BoardGrid.css'
 import { clientUnSplash } from '../../../axios.config'
+import { useSelector } from 'react-redux'
 
 // Usar la api de unsplash para hacer el background de los boards
 
@@ -41,8 +42,11 @@ const getPhotos = async () => {
 }
 
 const photos = await getPhotos()
+console.log(photos)
 
 const BoardGrid = () => {
+    // const boards = useSelector((state) => state.boards.boards) || []
+
     return (
         <div
             id="scrollbarRounded"

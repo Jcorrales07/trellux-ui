@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import KanbanList from './KanbanList';
-import add from '../../assets/icons/plus-line-icon.svg';
+import { addIcon } from '../../assets/icons';
 import '../css/BoardGrid.css';
 
 const KanbanLane = ({ list }) => {
@@ -36,7 +36,7 @@ const KanbanLane = ({ list }) => {
                     ''
                 ) : (
                     <>
-                        <img src={add} alt="" className="w-3 mr-2" />
+                        <img src={addIcon} alt="" className="w-3 mr-2" />
                         <p>Add new card</p>
                     </>
                 )}

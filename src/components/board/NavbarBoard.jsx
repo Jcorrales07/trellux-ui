@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
-import react from '../../assets/icons/react.svg'
-import menu from '../../assets/icons/menu.svg'
-import add from '../../assets/icons/add.svg'
-import close from '../../assets/icons/close.svg'
-import tailwindcss from '../../assets/icons/tailwindcss.svg'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { deleteUserLogged } from '../../slices/users.slice'
+import {
+    reactIcon,
+    menuIcon,
+    addIcon,
+    closeIcon,
+    tailwindcssIcon,
+} from '../../assets/icons'
 
 const userLinks = [
     { title: 'Your Profile', path: '/profile' },
@@ -14,15 +18,18 @@ const userLinks = [
 ]
 
 const NavbarBoard = () => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [toggleUserMenu, setToggleUserMenu] = useState(false)
     const [wasClicked, setWasClicked] = useState(false)
 
     const handleLogout = (link) => {
+        dispatch(deleteUserLogged())
+
         localStorage.removeItem('accessToken')
         toast.success('You Logout!', {
             position: 'bottom-right',
-            icon: '👋'
+            icon: '👋',
         })
         navigate(link.path)
     }
@@ -31,7 +38,7 @@ const NavbarBoard = () => {
         <header className="w-full bg-gray-800 rounded-tr px-5 py-3 flex justify-between items-center">
             <div>
                 <img
-                    src={wasClicked ? menu : close}
+                    src={wasClicked ? menuIcon : closeIcon}
                     alt="menu icon"
                     className="w-[28px] h-[28px] object-contain mr-4 md:hidden block"
                     onClick={() => {
@@ -46,7 +53,7 @@ const NavbarBoard = () => {
                         onClick={() => {
                             navigate('/dashboard')
                         }}
-                        src={tailwindcss}
+                        src={tailwindcssIcon}
                         alt="Your Company"
                     />
                 </div>
@@ -56,7 +63,7 @@ const NavbarBoard = () => {
                 onClick={() => setToggleUserMenu((prev) => !prev)}
             >
                 <img
-                    src={react}
+                    src={reactIcon}
                     alt="user avatar"
                     className="inline-block h-10 w-10 p-1 rounded-full ring-2 ring-cyan-700"
                 />

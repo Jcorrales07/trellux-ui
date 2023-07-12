@@ -1,16 +1,23 @@
-import React from 'react';
-import Sidebar from './Sidebar';
-import Boards from '../board/Boards';
-import NavbarBoard from '../board/NavbarBoard';
+import React from 'react'
+import Sidebar from './Sidebar'
+import Boards from '../board/Boards'
+import NavbarBoard from '../board/NavbarBoard'
 
-const Dashboard = () => (
-    <>
-        <NavbarBoard />
-        <div className='relative flex flex-row max-w-screen-xl m-auto '>
-            <Sidebar />
-            <Boards />
-        </div>
-    </>
-);
+import { useSelector } from 'react-redux'
 
-export default Dashboard;
+const Dashboard = () => {
+    const user = useSelector((state) => state.users.userLogged)
+    
+
+    return (
+        <>
+            <NavbarBoard />
+            <div className="relative flex flex-row max-w-screen-xl m-auto ">
+                <Sidebar />
+                <Boards />
+            </div>
+        </>
+    )
+}
+
+export default Dashboard

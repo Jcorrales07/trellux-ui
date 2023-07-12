@@ -3,7 +3,15 @@ import { clientTrelluxApi } from '../../axios.config'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { setUserLogged } from '../slices/users.slice'
+import { setBoards } from '../slices/boards.slice'
+import { tailwindcssIcon } from '../assets/icons'
+
 const Login = () => {
+    const dispatch = useDispatch()
+    // const userLogged = useSelector((state) => state.users.userLogged)
+    // console.log(userLogged)
     const navigate = useNavigate()
     const [user, setUser] = useState({
         username: '',
@@ -17,10 +25,18 @@ const Login = () => {
         })
     }
 
+    const getBoards = async () => {
+        console.log(user.username, 'user.username')
+        let boards = await clientTrelluxApi
+            .get(`/boards/${user.username}`)
+            .then((res) => res.data.boards)
+        console.log('boardsaaaaaaaaa', boards)
+        dispatch(setBoards(boards))
+        console.log('paso el dispatch')
+    }
+
     const handleLogin = async (e) => {
         e.preventDefault()
-
-        // Logica para hacer el login
 
         const clientReq = {
             username: user.username,
@@ -29,7 +45,7 @@ const Login = () => {
 
         if (clientReq.username === '' || clientReq.password === '') {
             toast.error('Please fill all the fields', {
-                position: 'top-right',
+                position: 'bottom-center',
             })
             return
         }
@@ -39,13 +55,16 @@ const Login = () => {
             .then((res) => res.data)
             .catch((e) => e)
 
+        // console.log('userReq', userReq)
+
         // guardar el user en REDUX
         const userLogin = userReq.user
+        // console.log('userLoginnnnnnnnnn', userLogin)
 
         if (!userReq.success) {
             // show error REACT TOAST
-            toast.error(userLogin.message, {
-                position: 'top-right',
+            toast.error(userReq.message, {
+                position: 'bottom-center',
             })
             return
         }
@@ -55,10 +74,15 @@ const Login = () => {
             password: '',
         })
 
-        // Guardar el token en el local storage
         toast.success('Login Successfully!', {
             position: 'bottom-right',
         })
+
+        // Guardar el usuario en Global state
+        dispatch(setUserLogged(userLogin))
+        getBoards()
+
+        // Guardar el token en el local storage
         localStorage.setItem('accessToken', userLogin.accessToken)
         navigate('/dashboard')
     }
@@ -68,7 +92,7 @@ const Login = () => {
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img
                     className="mx-auto h-10 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                    src={tailwindcssIcon}
                     alt="Your Company"
                 />
                 <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
@@ -89,7 +113,7 @@ const Login = () => {
                             <input
                                 id="username"
                                 name="username"
-                                type="username"
+                                type="usernam"
                                 autoComplete="username"
                                 required
                                 onChange={getInfo}

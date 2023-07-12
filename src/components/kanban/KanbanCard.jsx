@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import edit from '../../assets/icons/edit.svg';
+import { editIcon } from '../../assets/icons';
 
 // asociarle un papá
 const KanbanCard = ({ card }) => {
@@ -31,7 +31,7 @@ const KanbanCard = ({ card }) => {
                 className="bg-transparent focus:outline-none focus:outline-gray-700"
             />
             <div className="px-2 py-2 rounded-md hover:bg-slate-500">
-                <img src={edit} alt="edit icon" className="w-4 h-4" />
+                <img src={editIcon} alt="edit icon" className="w-4 h-4" />
             </div>
         </div>
     );

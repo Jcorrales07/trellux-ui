@@ -6,7 +6,7 @@ import {
     arrayMove,
     verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import close from '../../assets/icons/close.svg';
+import { closeIcon } from '../../assets/icons';
 
 const KanbanList = ({ list, isAddCard, setIsAddCard }) => {
     const { isOver, setNodeRef } = useDroppable({ id: list.id });
@@ -95,7 +95,7 @@ const KanbanList = ({ list, isAddCard, setIsAddCard }) => {
                                     }}
                                 >
                                     <img
-                                        src={close}
+                                        src={closeIcon}
                                         alt="cancel creation card"
                                     />
                                 </button>

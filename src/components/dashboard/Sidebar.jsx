@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import '../css/Navbar.css'
-import add from '../../assets/icons/plus-line-icon.svg'
+import { addIcon } from '../../assets/icons';
 import { clientTrelluxApi } from '../../../axios.config'
+import { useSelector } from 'react-redux'
+import '../css/Navbar.css'
 
 const navLinks = [
     { title: 'Boards', active: true },
@@ -13,11 +14,13 @@ const navLinks = [
 ]
 
 const Sidebar = () => {
+    const userLogged = useSelector((state) => state.users.userLogged)
+    console.log('userLogged', userLogged)
     const [isCreateBoard, setIsCreateBoard] = useState(false)
     const [board, setBoard] = useState({
         title: '',
         description: '',
-        username: 'jcorralesss',
+        username: userLogged.username,
     })
 
     const getInfo = (e) => {
@@ -112,7 +115,7 @@ const Sidebar = () => {
                                     setBoard({
                                         title: '',
                                         description: '',
-                                        username: 'jcorralesss',
+                                        username: '',
                                     })
                                     setIsCreateBoard((prev) => !prev)
 
@@ -145,7 +148,7 @@ const Sidebar = () => {
                         <div className="cursor-pointer mr-3">
                             <img
                                 className="h-4 w-4 text-slate-600"
-                                src={add}
+                                src={addIcon}
                                 alt="Create new board"
                             />
                         </div>

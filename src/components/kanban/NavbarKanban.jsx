@@ -1,5 +1,5 @@
 import React from 'react';
-import add from '../../assets/icons/plus-line-icon.svg';
+import { addIcon } from '../../assets/icons';
 
 const NavbarKanban = ({ kanban }) => {
     const [name, setName] = React.useState(kanban.name);
@@ -41,7 +41,7 @@ const NavbarKanban = ({ kanban }) => {
                         alert('add another list');
                     }}
                 >
-                    <img src={add} alt="" className="w-3" />
+                    <img src={addIcon} alt="" className="w-3" />
                     <p className="ml-2">Add another list</p>
                 </button>
 
