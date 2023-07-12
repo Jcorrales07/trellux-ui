@@ -1,7 +1,6 @@
 import React from 'react'
-import { HomePage, Login, Register, Dashboard } from './components'
+import { HomePage, Login, Register, Dashboard, KanbanBoard } from './components'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import KanbanBoard from './components/kanban/KanbanBoard'
 import { Toaster } from 'react-hot-toast'
 
 const App = () => {
