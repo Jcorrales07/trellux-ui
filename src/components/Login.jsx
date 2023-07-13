@@ -8,6 +8,16 @@ import { setUserLogged } from '../slices/users.slice'
 import { setBoards } from '../slices/boards.slice'
 import { tailwindcssIcon } from '../assets/icons'
 
+// const getBoards = (username) => {
+//     console.log(username, 'user.username')
+//     return clientTrelluxApi
+//         .get(`/boards/${username}`)
+//         .then((res) => res.data.boards)
+// }
+
+// const boards = await getBoards()
+// console.log(boards, 'boards')
+
 const Login = () => {
     const dispatch = useDispatch()
     // const userLogged = useSelector((state) => state.users.userLogged)
@@ -23,16 +33,6 @@ const Login = () => {
             ...user,
             [e.target.name]: e.target.value,
         })
-    }
-
-    const getBoards = async () => {
-        console.log(user.username, 'user.username')
-        let boards = await clientTrelluxApi
-            .get(`/boards/${user.username}`)
-            .then((res) => res.data.boards)
-        console.log('boardsaaaaaaaaa', boards)
-        dispatch(setBoards(boards))
-        console.log('paso el dispatch')
     }
 
     const handleLogin = async (e) => {
@@ -80,7 +80,17 @@ const Login = () => {
 
         // Guardar el usuario en Global state
         dispatch(setUserLogged(userLogin))
-        getBoards()
+
+        // Guardar los boards del usuario en el Global State
+        try {
+            const boards = await clientTrelluxApi
+                .get(`/boards/${userLogin.username}`)
+                .then((res) => res.data.boards)
+                .catch((e) => e)
+            dispatch(setBoards(boards || []))
+        } catch (e) {
+            console.log(e)
+        }
 
         // Guardar el token en el local storage
         localStorage.setItem('accessToken', userLogin.accessToken)

@@ -3,36 +3,36 @@ import { createSlice } from '@reduxjs/toolkit'
 const boardsSlice = createSlice({
     name: 'boards',
     initialState: {
-        boards: [],
+        userBoards: [],
     },
     reducers: {
         setBoards: (state, action) => {
-            state.boards = action.payload
+            state.userBoards = action.payload
         },
 
         addNewBoard: (state, action) => {
-            state.boards.push(action.payload)
+            state.userBoards.push(action.payload)
         },
 
         getBoard: (state, action) => {
-            let selectedBoard = state.boards.find(
+            let selectedBoard = state.userBoards.find(
                 (board) => board.id === action.payload
             )
             return selectedBoard
         },
 
         deleteBoard: (state, action) => {
-            let selectedBoard = state.boards.findIndex(
+            let selectedBoard = state.userBoards.findIndex(
                 (board) => board.id === action.payload
             )
 
-            state.boards.splice(selectedBoard, 1)
+            state.userBoards.splice(selectedBoard, 1)
         },
 
         updateBoard: (state, action) => {
             const { id, name, description } = action.payload
-            const index = state.boards.findIndex((board) => board.id === id)
-            state.boards[index] = { id, name, description }
+            const index = state.userBoards.findIndex((board) => board.id === id)
+            state.userBoards[index] = { id, name, description }
         },
     },
 })

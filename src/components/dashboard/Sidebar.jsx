@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { addIcon } from '../../assets/icons';
 import { clientTrelluxApi } from '../../../axios.config'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { v4 as uuidv4 } from 'uuid'
 import '../css/Navbar.css'
+import { addNewBoard } from '../../slices/boards.slice';
+import { format } from 'date-fns';
 
 const navLinks = [
     { title: 'Boards', active: true },
@@ -15,12 +18,16 @@ const navLinks = [
 
 const Sidebar = () => {
     const userLogged = useSelector((state) => state.users.userLogged)
-    console.log('userLogged', userLogged)
+    const dispatch = useDispatch()
+    // console.log('userLogged', userLogged)
     const [isCreateBoard, setIsCreateBoard] = useState(false)
+    
     const [board, setBoard] = useState({
+        id: uuidv4(),
         title: '',
         description: '',
         username: userLogged.username,
+        createdAt: format(new Date(), 'MMMM dd, yyyy'),
     })
 
     const getInfo = (e) => {
@@ -103,6 +110,8 @@ const Sidebar = () => {
 
                                     console.log('board', board)
 
+                                    dispatch(addNewBoard(board))
+
                                     // aca se manda a la base de datos
                                     clientTrelluxApi
                                         .post('/boards', board)
@@ -113,9 +122,11 @@ const Sidebar = () => {
                                     // REDUX PROCEDURE
 
                                     setBoard({
+                                        id: '',
                                         title: '',
                                         description: '',
                                         username: '',
+                                        createdAt: '',
                                     })
                                     setIsCreateBoard((prev) => !prev)
 

@@ -6,4 +6,14 @@ import Dashboard from './dashboard/Dashboard'
 
 import KanbanBoard from './kanban/KanbanBoard'
 
-export { HomePage, Login, Register, Navbar, Dashboard, KanbanBoard }
+import ProtectedRoute from './ProtectedRoute'
+
+export {
+    HomePage,
+    Login,
+    Register,
+    Navbar,
+    Dashboard,
+    KanbanBoard,
+    ProtectedRoute,
+}
