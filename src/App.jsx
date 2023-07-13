@@ -21,21 +21,14 @@ const App = () => {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route
-                        path="/dashboard"
-                        element={
-                            <ProtectedRoute user={user} path={'/login'}>
-                                <Dashboard />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/board/:boardId"
-                        element={
-                            <ProtectedRoute user={user} path={'/login'}>
-                                <KanbanBoard />
-                            </ProtectedRoute>
-                        }
-                    />
+                        element={<ProtectedRoute user={user} path={'/login'} />}
+                    >
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route
+                            path="/board/:boardId"
+                            element={<KanbanBoard />}
+                        />
+                    </Route>
                 </Routes>
             </Router>
             <Toaster />
