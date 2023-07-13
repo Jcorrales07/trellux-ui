@@ -43,7 +43,10 @@ const BoardGrid = () => {
             className="grid sm:grid-cols-2 lg:grid-cols-3 auto-rows-max gap-5 justify-items-stretch h-[91vh] overflow-x-hidden p-5 scrollbar scrollbar-thumb-slate-700 scrollbar-w-2"
         >
             {boards.map((board, index) => {
-                const formatDate = format(new Date(board.createdAt), 'MMMM dd, yyyy')
+                const formatDate = format(
+                    new Date(board.createdAt),
+                    'MMMM dd, yyyy'
+                )
                 return (
                     <BoardCard
                         key={index}
@@ -54,6 +57,11 @@ const BoardGrid = () => {
                     />
                 )
             })}
+            <BoardCard
+                key={'create-board'}
+                title={'Create Board'}
+                boardId={'create-board'}
+            />
         </div>
     )
 }

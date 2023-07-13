@@ -17,7 +17,6 @@ const KanbanCard = ({ card }) => {
 
     const [name, setName] = useState(card.name);
 
-    console.log('listeners', listeners)
     return (
         <div
             style={style}
@@ -29,6 +28,7 @@ const KanbanCard = ({ card }) => {
             <input
                 value={name}
                 className="bg-transparent focus:outline-none focus:outline-gray-700"
+                onChange={(e) => setName(e.target.value)}
             />
             <div className="px-2 py-2 rounded-md hover:bg-slate-500">
                 <img src={editIcon} alt="edit icon" className="w-4 h-4" />

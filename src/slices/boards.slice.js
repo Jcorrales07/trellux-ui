@@ -4,6 +4,7 @@ const boardsSlice = createSlice({
     name: 'boards',
     initialState: {
         userBoards: [],
+        selectedBoard: {},
     },
     reducers: {
         setBoards: (state, action) => {
@@ -14,11 +15,11 @@ const boardsSlice = createSlice({
             state.userBoards.push(action.payload)
         },
 
-        getBoard: (state, action) => {
-            let selectedBoard = state.userBoards.find(
+        setBoard: (state, action) => {
+            state.selectedBoard = state.userBoards.find(
                 (board) => board.id === action.payload
             )
-            return selectedBoard
+            console.log('selsl', state.selectedBoard)
         },
 
         deleteBoard: (state, action) => {
@@ -38,7 +39,7 @@ const boardsSlice = createSlice({
 })
 
 // export de las functions (actions)
-export const { addNewBoard, deleteBoard, getBoard, setBoards, updateBoard } =
+export const { addNewBoard, deleteBoard, setBoard, setBoards, updateBoard } =
     boardsSlice.actions
 
 export default boardsSlice.reducer

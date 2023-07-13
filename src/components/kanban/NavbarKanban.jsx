@@ -2,7 +2,7 @@ import React from 'react';
 import { addIcon } from '../../assets/icons';
 
 const NavbarKanban = ({ kanban }) => {
-    const [name, setName] = React.useState(kanban.name);
+    const [name, setName] = React.useState(kanban.title);
 
     const resizeInput = () => {
         const input = document.querySelector('.magic-input');

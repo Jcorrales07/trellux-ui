@@ -1,38 +1,40 @@
 import React, { useState } from 'react'
-import { addIcon } from '../../assets/icons';
+import { addIcon } from '../../assets/icons' 
 import { clientTrelluxApi } from '../../../axios.config'
 import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
 import '../css/Navbar.css'
-import { addNewBoard } from '../../slices/boards.slice';
-import { format } from 'date-fns';
+import { addNewBoard } from '../../slices/boards.slice'
+import { format } from 'date-fns'
 
 const navLinks = [
     { title: 'Boards', active: true },
-    { title: 'Team', active: false },
-    { title: 'Projects', active: false },
-    { title: 'Calendar', active: false },
-    { title: 'Documents', active: false },
-    { title: 'Reports', active: false },
+    // { title: 'Team', active: false },
+    // { title: 'Projects', active: false },
+    // { title: 'Calendar', active: false },
+    // { title: 'Documents', active: false },
+    // { title: 'Reports', active: false },
 ]
 
 const Sidebar = () => {
-    const userLogged = useSelector((state) => state.users.userLogged)
-    const dispatch = useDispatch()
+    // const userLogged = useSelector((state) => state.users.userLogged)
     // console.log('userLogged', userLogged)
-    const [isCreateBoard, setIsCreateBoard] = useState(false)
-    
-    const [board, setBoard] = useState({
-        id: uuidv4(),
-        title: '',
-        description: '',
-        username: userLogged.username,
-        createdAt: format(new Date(), 'MMMM dd, yyyy'),
-    })
+    // const dispatch = useDispatch()
 
-    const getInfo = (e) => {
-        setBoard((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    }
+    // CREATE BOARD
+    // const [isCreateBoard, setIsCreateBoard] = useState(false)
+
+    // const [board, setBoard] = useState({
+    //     id: uuidv4(),
+    //     title: '',
+    //     username: userLogged.username,
+    //     createdAt: format(new Date(), 'MMMM dd, yyyy'),
+    // })
+
+    // const getInfo = (e) => {
+    //     setBoard((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    // }
+    // CREATE BOARD
 
     return (
         <div
@@ -61,7 +63,7 @@ const Sidebar = () => {
                 </nav>
                 <hr />
 
-                {isCreateBoard ? (
+                {/* {isCreateBoard ? (
                     <div className="p-2 mt-10 text-gray-300">
                         <label
                             htmlFor="createboard"
@@ -85,41 +87,19 @@ const Sidebar = () => {
                                 />
                             </div>
 
-                            <div className="flex flex-col mb-5">
-                                <label
-                                    htmlFor="boarddescription"
-                                    className="mb-2"
-                                >
-                                    Board Description
-                                </label>
-                                <textarea
-                                    name="description"
-                                    id=""
-                                    cols="10"
-                                    rows="3"
-                                    className="focus:outline-none focus:outline-indigo-500 bg-transparent rounded-md ring-2 ring-indigo-900 px-2"
-                                    onChange={getInfo}
-                                    value={board.description}
-                                ></textarea>
-                            </div>
-
                             <button
                                 type="button"
                                 onClick={(e) => {
                                     e.preventDefault()
 
-                                    console.log('board', board)
+                                    //console.log('board', board)
 
                                     dispatch(addNewBoard(board))
 
-                                    // aca se manda a la base de datos
+                                    // sending to db
                                     clientTrelluxApi
                                         .post('/boards', board)
                                         .then((res) => console.log(res.data))
-
-                                    // pero tengo que hacer que se renderice el nuevo board
-                                    // Entonces lo voy a guardar en el array de boards en redux y asi se renderiza
-                                    // REDUX PROCEDURE
 
                                     setBoard({
                                         id: '',
@@ -130,10 +110,6 @@ const Sidebar = () => {
                                     })
                                     setIsCreateBoard((prev) => !prev)
 
-                                    // Voy a tomar la info
-                                    // Mandarla al backend
-                                    // Pero no se si ponerle REDUX a esta vaina para que renderice el board nuevo
-                                    // Pero entonces como lo guardo??
                                 }}
                                 className="transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 px-5 py-2 rounded-md w-fit m-auto"
                             >
@@ -143,10 +119,10 @@ const Sidebar = () => {
                     </div>
                 ) : (
                     ''
-                )}
+                )} */}
             </div>
 
-            <button
+            {/* <button
                 className="bg-indigo-600 text-white rounded-lg px-4 py-2 w-full button"
                 onClick={() => {
                     setIsCreateBoard((prev) => !prev)
@@ -166,7 +142,7 @@ const Sidebar = () => {
                         Create New Board
                     </>
                 )}
-            </button>
+            </button> */}
         </div>
     )
 }

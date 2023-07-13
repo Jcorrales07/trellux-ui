@@ -1,19 +1,19 @@
-import React from 'react';
-import NavbarKanban from './NavbarKanban';
-import KanbanGrid from './KanbanGrid';
-import NavbarBoard from '../board/NavbarBoard';
-import { DndContext } from '@dnd-kit/core';
-import { useParams } from 'react-router-dom';
+import React from 'react'
+import NavbarKanban from './NavbarKanban'
+import KanbanGrid from './KanbanGrid'
+import NavbarBoard from '../board/NavbarBoard'
+// import { DndContext } from '@dnd-kit/core';
+import { useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { setBoard } from '../../slices/boards.slice'
 
 const KanbanBoard = () => {
-    // traer la info del kanban con el id que se pasa por parametro en la url
-    // Para poder llenar el navbar
-    const kanbanId = useParams().boardId;
+    const kanbanId = useParams().boardId
+    
+    const dispatch = useDispatch()
+    dispatch(setBoard(kanbanId))
 
-    const getKanbanInfo = () => {
-        //Fetch kanban with id 'kanbanId'
-    };
-    const kanban = { name: 'Kanban name' }; //getKanbanInfo();
+    const kanban = useSelector((state) => state.boards.selectedBoard)
 
     return (
         <div className="m-auto max-h-[100vh]">
@@ -21,7 +21,7 @@ const KanbanBoard = () => {
             <NavbarKanban kanban={kanban} />
             <KanbanGrid />
         </div>
-    );
-};
+    )
+}
 
-export default KanbanBoard;
+export default KanbanBoard
