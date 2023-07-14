@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BoardCard from './BoardCard'
 import '../css/BoardGrid.css'
 import { clientUnSplash } from '../../../axios.config'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { format } from 'date-fns'
+import { setPhotos } from '../../slices/boards.slice'
 
 // Usar la api de unsplash para hacer el background de los boards
 
@@ -31,11 +32,27 @@ const getPhotos = async () => {
 }
 
 const photos = await getPhotos()
-// console.log(photos)
+console.log(photos)
 
 const BoardGrid = () => {
+    const dispatch = useDispatch()
+    dispatch(setPhotos(photos))
     const boards = useSelector((state) => state.boards.userBoards)
     console.log(boards)
+
+    // const dispatch = useDispatch()
+    // const boards = useSelector((state) => state.boards.userBoards)
+    // const [photos, setPhotos] = useState([])
+
+    // useEffect(() => {
+    //     const fetchPhotos = async () => {
+    //         const response = await clientUnSplash.get('/photos?per_page=30')
+    //         setPhotos(response.data)
+    //         console.log('photos', photos)
+    //         dispatch(setPhotos(response.data))
+    //     }
+    //     fetchPhotos()
+    // }, [dispatch])
 
     return (
         <div

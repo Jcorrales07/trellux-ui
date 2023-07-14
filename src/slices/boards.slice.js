@@ -4,11 +4,16 @@ const boardsSlice = createSlice({
     name: 'boards',
     initialState: {
         userBoards: [],
+        bgPhotosBoards: [],
         selectedBoard: {},
     },
     reducers: {
         setBoards: (state, action) => {
             state.userBoards = action.payload
+        },
+
+        setPhotos: (state, action) => {
+            state.bgPhotosBoards = action.payload
         },
 
         addNewBoard: (state, action) => {
@@ -31,15 +36,22 @@ const boardsSlice = createSlice({
         },
 
         updateBoard: (state, action) => {
-            const { id, name, description } = action.payload
+            const { id, title } = action.payload
+            const board = state.userBoards.find((board) => board.id === id)
             const index = state.userBoards.findIndex((board) => board.id === id)
-            state.userBoards[index] = { id, name, description }
+            state.userBoards[index] = { ...board, title }
         },
     },
 })
 
 // export de las functions (actions)
-export const { addNewBoard, deleteBoard, setBoard, setBoards, updateBoard } =
-    boardsSlice.actions
+export const {
+    addNewBoard,
+    deleteBoard,
+    setBoard,
+    setBoards,
+    setPhotos,
+    updateBoard,
+} = boardsSlice.actions
 
 export default boardsSlice.reducer

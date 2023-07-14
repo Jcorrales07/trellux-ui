@@ -5,23 +5,30 @@ import { v4 as uuidv4 } from 'uuid'
 import { format } from 'date-fns'
 import { addNewBoard } from '../../slices/boards.slice'
 import { clientTrelluxApi } from '../../../axios.config'
+import { de } from 'date-fns/locale'
 
 const BoardCard = ({ title, date, boardId, bgPhoto }) => {
     const navigate = useNavigate()
 
     const userLogged = useSelector((state) => state.users.userLogged)
+    let boardCount = useSelector((state) => state.boards.userBoards.length)
+    const photos = useSelector((state) => state.boards.bgPhotosBoards)
+    console.log('photos', photos)
     // console.log('userLogged', userLogged)
     const dispatch = useDispatch()
 
     // CREATE BOARD
     const [isCreateBoard, setIsCreateBoard] = useState(false)
 
-    const [board, setBoard] = useState({
+    const defaultBoard = {
         id: uuidv4(),
         title: '',
+        bgUrl: photos[boardCount++].urls.regular,
         username: userLogged.username,
         createdAt: format(new Date(), 'MMMM dd, yyyy'),
-    })
+    }
+
+    const [board, setBoard] = useState(defaultBoard)
 
     const getInfo = (e) => {
         setBoard((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -58,6 +65,8 @@ const BoardCard = ({ title, date, boardId, bgPhoto }) => {
                             <button
                                 type="button"
                                 onClick={(e) => {
+                                    if (board.title === '') return
+
                                     e.preventDefault()
 
                                     console.log('board', board)
@@ -69,15 +78,7 @@ const BoardCard = ({ title, date, boardId, bgPhoto }) => {
                                         .post('/boards', board)
                                         .then((res) => console.log(res.data))
 
-                                    setBoard({
-                                        id: uuidv4(),
-                                        title: '',
-                                        username: userLogged.username,
-                                        createdAt: format(
-                                            new Date(),
-                                            'MMMM dd, yyyy'
-                                        ),
-                                    })
+                                    setBoard(defaultBoard)
                                     setIsCreateBoard((prev) => !prev)
                                 }}
                                 className="transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 px-5 py-2 rounded-md w-fit m-auto"
@@ -88,12 +89,7 @@ const BoardCard = ({ title, date, boardId, bgPhoto }) => {
                                 className="text-white transition ease-in-out delay-150 bg-red-400 hover:-translate-y-1 hover:scale-110 hover:bg-red-600 duration-300 px-5 py-2 rounded-md w-fit m-auto"
                                 onClick={(e) => {
                                     e.preventDefault()
-                                    setBoard({
-                                        id: '',
-                                        title: '',
-                                        username: '',
-                                        createdAt: '',
-                                    })
+                                    setBoard(defaultBoard)
                                     setIsCreateBoard((prev) => !prev)
                                 }}
                             >

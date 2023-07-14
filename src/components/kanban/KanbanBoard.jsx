@@ -16,7 +16,7 @@ const KanbanBoard = () => {
     const kanban = useSelector((state) => state.boards.selectedBoard)
 
     return (
-        <div className="m-auto max-h-[100vh]">
+        <div className="m-auto max-h-[100vh] bg-cover" style={{backgroundImage: `url(${kanban.bgUrl})`}}>
             <NavbarBoard />
             <NavbarKanban kanban={kanban} />
             <KanbanGrid />
