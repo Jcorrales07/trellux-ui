@@ -15,6 +15,7 @@ import reactRouterIcon from './react-router.svg'
 import reduxIcon from './redux.svg'
 import tailwindcssIcon from './tailwindcss.svg'
 import viteIcon from './vite.svg'
+import draggableDots from './draggable-dots.svg'
 
 export {
     addIcon,
@@ -32,4 +33,5 @@ export {
     reduxIcon,
     tailwindcssIcon,
     viteIcon,
+    draggableDots,
 }

@@ -1,24 +1,17 @@
-import React, { useState } from 'react';
-import KanbanCard from './KanbanCard';
-import { DndContext, closestCenter, useDroppable } from '@dnd-kit/core';
-import {
-    SortableContext,
-    arrayMove,
-    verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
-import { closeIcon } from '../../assets/icons';
+import React, { useState } from 'react'
+import KanbanCard from './KanbanCard'
+import { closeIcon } from '../../assets/icons'
+import { Draggable, Droppable } from 'react-beautiful-dnd'
 
 const KanbanList = ({ list, isAddCard, setIsAddCard }) => {
-    const { isOver, setNodeRef } = useDroppable({ id: list.id });
-
     // el array de cards
-    const [cards, setCards] = useState(list.cards);
+    const [cards, setCards] = useState(list.cards)
 
     //Creacion de la targeta
-    const [newCard, setNewCard] = useState('');
+    const [newCard, setNewCard] = useState('')
 
     const createCard = () => {
-        if (!newCard) return;
+        if (!newCard) return
         setCards((prev) => [
             ...prev,
             {
@@ -26,45 +19,30 @@ const KanbanList = ({ list, isAddCard, setIsAddCard }) => {
                 id: Date.now(),
                 name: newCard,
             },
-        ]);
-        setNewCard('');
-    };
-
-    const style = {
-        backgroundColor: isOver ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
-    };
-
-    const handleDragEnd = (event) => {
-        const { active, over } = event;
-
-        setCards(() => {
-            const oldIndex = cards.findIndex((card) => card.id === active.id);
-            const newIndex = cards.findIndex((card) => card.id === over.id);
-
-            return arrayMove(cards, oldIndex, newIndex);
-        });
-    };
+        ])
+        setNewCard('')
+    }
 
     return (
-        <DndContext
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-        >
-            {/* className='overflow-scroll overflow-x-hidden scrollbar-thin scrollbar-w-1' */}
-            <div
-                ref={setNodeRef}
-                style={style}
-                id="scrollbarRounded"
-                //overflow-x-hidden scrollbar-track-gray-800 scrollbar-thin scrollbar-w-1.5 scrollbar-track-rounded-full max-h-[66vh]
-                className=" max-w-[300px] "
-            >
-                <SortableContext
-                    items={cards}
-                    strategy={verticalListSortingStrategy}
+        <Droppable droppableId={list.id} type="task">
+            {(provided, snapshot) => (
+                <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    onDragOver={() => snapshot.isDraggingOver}
+                    id="scrollbarRounded"
+                    //overflow-x-hidden scrollbar-track-gray-800 scrollbar-thin scrollbar-w-1.5 scrollbar-track-rounded-full max-h-[66vh]
+                    className=" max-w-[300px]"
+                    style={{
+                        flexGrow: 1,
+                        minHeight: '48px',
+                    }}
                 >
                     {cards.map((card, i) => (
-                        <KanbanCard key={i} card={card} />
+                        <KanbanCard key={i} card={card} index={i} />
                     ))}
+
+                    {provided.placeholder}
 
                     {/* Create new card function */}
                     {isAddCard ? (
@@ -77,8 +55,8 @@ const KanbanList = ({ list, isAddCard, setIsAddCard }) => {
                                 value={newCard}
                                 onChange={(e) => setNewCard(e.target.value)}
                                 onKeyUpCapture={(e) => {
-                                    if (e.key === 'Enter') createCard();
-                                    return;
+                                    if (e.key === 'Enter') createCard()
+                                    return
                                 }}
                             />
                             <div className="flex">
@@ -90,8 +68,8 @@ const KanbanList = ({ list, isAddCard, setIsAddCard }) => {
                                 </button>
                                 <button
                                     onClick={() => {
-                                        setIsAddCard(false);
-                                        setNewCard('');
+                                        setIsAddCard(false)
+                                        setNewCard('')
                                     }}
                                 >
                                     <img
@@ -104,10 +82,10 @@ const KanbanList = ({ list, isAddCard, setIsAddCard }) => {
                     ) : (
                         ''
                     )}
-                </SortableContext>
-            </div>
-        </DndContext>
-    );
-};
+                </div>
+            )}
+        </Droppable>
+    )
+}
 
-export default KanbanList;
+export default KanbanList

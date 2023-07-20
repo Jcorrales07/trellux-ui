@@ -8,37 +8,19 @@ import { setPhotos } from '../../slices/boards.slice'
 
 // Usar la api de unsplash para hacer el background de los boards
 
-// const boards = [
-//     {
-//         title: 'Board #1',
-//         date: new Date().toDateString(),
-//     },
-//     {
-//         title: 'Board #2',
-//         date: new Date().toDateString(),
-//     },
-//     {
-//         title: 'Board #3',
-//         date: new Date().toDateString(),
-//     },
-//     {
-//         title: 'Board #4',
-//         date: new Date().toDateString(),
-//     },
-// ]
-
 const getPhotos = async () => {
     return (await clientUnSplash.get('/photos?per_page=30')).data
 }
 
 const photos = await getPhotos()
-console.log(photos)
+//console.log(photos)
 
 const BoardGrid = () => {
+
     const dispatch = useDispatch()
     dispatch(setPhotos(photos))
     const boards = useSelector((state) => state.boards.userBoards)
-    console.log(boards)
+    // console.log(boards)
 
     // const dispatch = useDispatch()
     // const boards = useSelector((state) => state.boards.userBoards)

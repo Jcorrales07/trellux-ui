@@ -27,6 +27,7 @@ const NavbarBoard = () => {
         dispatch(deleteUserLogged())
 
         localStorage.removeItem('accessToken')
+        localStorage.removeItem('username')
         toast.success('You Logout!', {
             position: 'bottom-right',
             icon: '👋',

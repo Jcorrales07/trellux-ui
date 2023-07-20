@@ -12,7 +12,7 @@ import {
 import { useSelector } from 'react-redux'
 
 const App = () => {
-    const user = useSelector((state) => state.users.userLogged)
+    const user = localStorage.getItem('accessToken')
     return (
         <>
             <Router>

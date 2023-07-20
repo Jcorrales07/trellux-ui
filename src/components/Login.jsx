@@ -94,6 +94,7 @@ const Login = () => {
 
         // Guardar el token en el local storage
         localStorage.setItem('accessToken', userLogin.accessToken)
+        localStorage.setItem('username', userLogin.username)
         navigate('/dashboard')
     }
 

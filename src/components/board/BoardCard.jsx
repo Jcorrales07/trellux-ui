@@ -1,20 +1,24 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { v4 as uuidv4 } from 'uuid'
+import { useDispatch, useSelector } from 'react-redux'
+
 import { format } from 'date-fns'
+import { v4 as uuidv4 } from 'uuid'
+
 import { addNewBoard } from '../../slices/boards.slice'
 import { clientTrelluxApi } from '../../../axios.config'
-import { de } from 'date-fns/locale'
 
 const BoardCard = ({ title, date, boardId, bgPhoto }) => {
     const navigate = useNavigate()
 
     const userLogged = useSelector((state) => state.users.userLogged)
+    const username = localStorage.getItem('username')
     let boardCount = useSelector((state) => state.boards.userBoards.length)
     const photos = useSelector((state) => state.boards.bgPhotosBoards)
-    console.log('photos', photos)
+
+    // console.log('photos', photos)
     // console.log('userLogged', userLogged)
+
     const dispatch = useDispatch()
 
     // CREATE BOARD
@@ -24,7 +28,7 @@ const BoardCard = ({ title, date, boardId, bgPhoto }) => {
         id: uuidv4(),
         title: '',
         bgUrl: photos[boardCount++].urls.regular,
-        username: userLogged.username,
+        username,
         createdAt: format(new Date(), 'MMMM dd, yyyy'),
     }
 
