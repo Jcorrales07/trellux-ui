@@ -1,11 +1,10 @@
 import React from 'react'
-import NavbarKanban from './NavbarKanban'
 import KanbanGrid from './KanbanGrid'
+import NavbarKanban from './NavbarKanban'
 import NavbarBoard from '../board/NavbarBoard'
-// import { DndContext } from '@dnd-kit/core';
 import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 import { setBoard } from '../../slices/boards.slice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const KanbanBoard = () => {
     const kanbanId = useParams().boardId
@@ -14,9 +13,13 @@ const KanbanBoard = () => {
     dispatch(setBoard(kanbanId))
 
     const kanban = useSelector((state) => state.boards.selectedBoard)
+    console.log('kanban', kanban)
 
     return (
-        <div className="m-auto max-h-[100vh] bg-cover" style={{backgroundImage: `url(${kanban.bgUrl})`}}>
+        <div
+            className="m-auto max-h-[100vh] bg-cover"
+            style={{ backgroundImage: `url(${kanban.bgUrl})` }}
+        >
             <NavbarBoard />
             <NavbarKanban kanban={kanban} />
             <KanbanGrid />

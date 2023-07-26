@@ -24,7 +24,6 @@ const boardsSlice = createSlice({
             state.selectedBoard = state.userBoards.find(
                 (board) => board.id === action.payload
             )
-            console.log('selsl', state.selectedBoard)
         },
 
         deleteBoard: (state, action) => {

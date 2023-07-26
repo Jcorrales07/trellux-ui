@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import KanbanCard from './KanbanCard'
 import { closeIcon } from '../../assets/icons'
-import { Draggable, Droppable } from 'react-beautiful-dnd'
+import { Droppable } from 'react-beautiful-dnd'
+import { v4 as uuidv4 } from 'uuid'
 
-const KanbanList = ({ list, isAddCard, setIsAddCard }) => {
+const KanbanList = ({ column, tasks, isAddCard, setIsAddCard }) => {
+    const [columnIdName, setColumnIdName] = useState(column.title.replace(' ', ''))
+    // console.log('tasks', tasks)
     // el array de cards
-    const [cards, setCards] = useState(list.cards)
+    const [cards, setCards] = useState(tasks)
+    // console.log('tasks => cards', cards)
 
     //Creacion de la targeta
     const [newCard, setNewCard] = useState('')
@@ -16,15 +20,16 @@ const KanbanList = ({ list, isAddCard, setIsAddCard }) => {
             ...prev,
             {
                 // el id tiene que cambiar
-                id: Date.now(),
-                name: newCard,
+                id: uuidv4(),
+                content: newCard,
             },
         ])
+        console.log('cartas', cards)
         setNewCard('')
     }
 
     return (
-        <Droppable droppableId={list.id} type="task">
+        <Droppable droppableId={columnIdName} type="task">
             {(provided, snapshot) => (
                 <div
                     ref={provided.innerRef}

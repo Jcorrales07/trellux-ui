@@ -62,16 +62,6 @@ const NavbarKanban = ({ kanban }) => {
             />
             <div className="flex">
                 <button
-                    className="py-2 px-3 rounded-md hover:text-white text-slate-400 flex items-center  hover:border-white border-slate-400 hover:border-2 transition duration-300 ease-in-out border-2 mr-3"
-                    onClick={() => {
-                        alert('add another list')
-                    }}
-                >
-                    <img src={addIcon} alt="" className="w-3" />
-                    <p className="ml-2">Add another list</p>
-                </button>
-
-                <button
                     className="py-2 px-3 rounded-md hover:text-white text-slate-400 flex items-center  hover:border-white border-slate-400 hover:border-2 transition duration-300 ease-in-out border-2"
                     onClick={saveChanges}
                 >

@@ -55,11 +55,11 @@ const Login = () => {
             .then((res) => res.data)
             .catch((e) => e)
 
-        // console.log('userReq', userReq)
+        console.log('userReq', userReq)
 
         // guardar el user en REDUX
         const userLogin = userReq.user
-        // console.log('userLoginnnnnnnnnn', userLogin)
+        console.log('userLoginnnnnnnnnn', userLogin)
 
         if (!userReq.success) {
             // show error REACT TOAST
@@ -92,6 +92,7 @@ const Login = () => {
             console.log(e)
         }
 
+        console.log('llegue');
         // Guardar el token en el local storage
         localStorage.setItem('accessToken', userLogin.accessToken)
         localStorage.setItem('username', userLogin.username)

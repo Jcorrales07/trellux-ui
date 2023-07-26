@@ -11,18 +11,11 @@ import { clientTrelluxApi } from '../../../axios.config'
 const BoardCard = ({ title, date, boardId, bgPhoto }) => {
     const navigate = useNavigate()
 
+    const dispatch = useDispatch()
     const userLogged = useSelector((state) => state.users.userLogged)
     const username = localStorage.getItem('username')
     let boardCount = useSelector((state) => state.boards.userBoards.length)
     const photos = useSelector((state) => state.boards.bgPhotosBoards)
-
-    // console.log('photos', photos)
-    // console.log('userLogged', userLogged)
-
-    const dispatch = useDispatch()
-
-    // CREATE BOARD
-    const [isCreateBoard, setIsCreateBoard] = useState(false)
 
     const defaultBoard = {
         id: uuidv4(),
@@ -32,6 +25,11 @@ const BoardCard = ({ title, date, boardId, bgPhoto }) => {
         createdAt: format(new Date(), 'MMMM dd, yyyy'),
     }
 
+    // console.log('photos', photos)
+    // console.log('userLogged', userLogged)
+
+    // CREATE BOARD
+    const [isCreateBoard, setIsCreateBoard] = useState(false)
     const [board, setBoard] = useState(defaultBoard)
 
     const getInfo = (e) => {

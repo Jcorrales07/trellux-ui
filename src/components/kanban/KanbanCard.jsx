@@ -3,19 +3,20 @@ import { editIcon } from '../../assets/icons'
 import { Draggable } from 'react-beautiful-dnd'
 
 const KanbanCard = ({ card, index }) => {
-    const [name, setName] = useState(card.name)
+    // console.log('card', card)
+    const [name, setName] = useState(card.content || card.name)
 
     return (
         <Draggable draggableId={card.id} index={index}>
             {(provided) => (
                 <div
                     {...provided.dragHandleProps}
-                    ref={provided.innerRef}
                     {...provided.draggableProps}
+                    ref={provided.innerRef}
                     style={{
                         ...provided.draggableProps.style,
                     }}
-                    className="flex justify-between items-center text-white px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 cursor-pointer mb-2 mr-1"
+                    className={`flex justify-between items-center text-white px-3 py-2 rounded-md bg-slate-700 hover:bg-slate-600 cursor-pointer mb-2 mr-1`}
                 >
                     <input
                         value={name}
