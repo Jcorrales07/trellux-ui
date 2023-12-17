@@ -1,3 +1,10 @@
+// Lo que hay que reparar aca es:
+// 0. Tengo que rediseñar la estructura del drag n drop, el que tengo en el slice es el ejemplo del curso de react-beautiful-dnd
+// 1. Si yo muevo una columna, que se actualice el estado y que se guarde la modificacion en la base de datos
+// 2. Si yo muevo una tarea de columna, que se quede ahi.
+// 3. Que el boton de agregar columna no se mueva
+// 4. Que el boton de "Saev Changes" me guarde el estado, en mongo
+
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { useSelector } from 'react-redux'

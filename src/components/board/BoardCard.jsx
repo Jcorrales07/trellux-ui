@@ -25,6 +25,8 @@ const BoardCard = ({ title, date, boardId, bgPhoto }) => {
         createdAt: format(new Date(), 'MMMM dd, yyyy'),
     }
 
+    
+
     // console.log('photos', photos)
     // console.log('userLogged', userLogged)
 
@@ -35,6 +37,25 @@ const BoardCard = ({ title, date, boardId, bgPhoto }) => {
     const getInfo = (e) => {
         setBoard((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
+
+    const createBoard = (e) => {
+        if (board.title === '') return
+
+        e.preventDefault()
+
+        console.log('board', board)
+
+        dispatch(addNewBoard(board))
+
+        // sending to db
+        clientTrelluxApi
+            .post('/boards', board)
+            .then((res) => console.log(res.data))
+
+        setBoard(defaultBoard)
+        setIsCreateBoard((prev) => !prev)
+    }
+
     // CREATE BOARD
 
     return boardId === 'create-board' ? (
@@ -44,7 +65,10 @@ const BoardCard = ({ title, date, boardId, bgPhoto }) => {
                     isCreateBoard ? 'flex' : 'hidden'
                 } cursor-pointer h-44 rounded-md bg-slate-800  bg-opacity-60 drop-shadow-xl flex justify-center items-center hover:bg-opacity-90 text-slate-500 hover:text-slate-400`}
             >
-                <div className="p-2 text-gray-300 h-44  rounded-md left-11">
+                <div className="p-2 text-gray-300 h-44  rounded-md left-11" onKeyDown={(e) => {
+                                    console.log(e.key)
+                                    if (e.key === 'Enter') createBoard(e)
+                                }}>
                     <form name="createboard" className="flex flex-col mt-5">
                         <div className="flex flex-col mb-5">
                             <label
@@ -67,21 +91,7 @@ const BoardCard = ({ title, date, boardId, bgPhoto }) => {
                             <button
                                 type="button"
                                 onClick={(e) => {
-                                    if (board.title === '') return
-
-                                    e.preventDefault()
-
-                                    console.log('board', board)
-
-                                    dispatch(addNewBoard(board))
-
-                                    // sending to db
-                                    clientTrelluxApi
-                                        .post('/boards', board)
-                                        .then((res) => console.log(res.data))
-
-                                    setBoard(defaultBoard)
-                                    setIsCreateBoard((prev) => !prev)
+                                    createBoard(e)
                                 }}
                                 className="transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 px-5 py-2 rounded-md w-fit m-auto"
                             >

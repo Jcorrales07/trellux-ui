@@ -20,7 +20,7 @@ const KanbanCard = ({ card, index }) => {
                 >
                     <input
                         value={name}
-                        className="bg-transparent focus:outline-none focus:outline-gray-700"
+                        className="bg-transparent focus:outline-none   cardName"
                         onChange={(e) => setName(e.target.value)}
                     />
                     <div className="px-2 py-2 rounded-md hover:bg-slate-500">
