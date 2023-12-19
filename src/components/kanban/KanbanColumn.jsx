@@ -11,14 +11,12 @@ const KanbanColumn = ({ columnId, column, tasks, index }) => {
     const [listName, setListName] = useState(column ? column.title : '')
     const [columnIdName, setColumnIdName] = useState(columnId.replace(' ',''))
 
-    // console.log('columnId', columnIdName)
-
     return columnId === 'addColumn' ? (
         <div
             className={`h-fit min-w-[300px] rounded-xl text-white text-opacity-70 hover:text-opacity-100 bg-slate-900  hover:bg-opacity-100 mx-3 cursor-pointer transition-all ease-in delay-0 font-bold text-lg select-none 
             ${isAddColumn ? 'bg-opacity-70': 'bg-opacity-100'}`}
         >
-            {isAddColumn ? (
+            {!isAddColumn ? (
                 <div
                     className="flex w-full h-full p-5"
                     onClick={() => {
@@ -37,7 +35,7 @@ const KanbanColumn = ({ columnId, column, tasks, index }) => {
                     <input
                         type="text"
                         className="bg-transparent focus:outline-none
-                        focus:outline-violet-500 outline rounded-md text-white p-1 w-full"
+                        focus:outline-violet-500  rounded-md text-white p-1 w-full"
                         placeholder="Enter list title..."
                         onChange={(e) => {
                             setNewColumnTitle(e.target.value)
@@ -92,6 +90,8 @@ const KanbanColumn = ({ columnId, column, tasks, index }) => {
                             <img src={draggableDots} alt="Drag from here" />
                         </div>
                     </div>
+
+                    {/* Donde van a estar las tareas */}
                     <KanbanList
                         column={column}
                         tasks={tasks}

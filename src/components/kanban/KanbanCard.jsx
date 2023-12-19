@@ -3,7 +3,6 @@ import { editIcon } from '../../assets/icons'
 import { Draggable } from 'react-beautiful-dnd'
 
 const KanbanCard = ({ card, index }) => {
-    // console.log('card', card)
     const [name, setName] = useState(card.content || card.name)
 
     return (

@@ -6,10 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 const KanbanList = ({ column, tasks, isAddCard, setIsAddCard }) => {
     const [columnIdName, setColumnIdName] = useState(column.title.replace(' ', ''))
-    // console.log('tasks', tasks)
-    // el array de cards
     const [cards, setCards] = useState(tasks)
-    // console.log('tasks => cards', cards)
 
     //Creacion de la targeta
     const [newCard, setNewCard] = useState('')

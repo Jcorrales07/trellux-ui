@@ -1,43 +1,42 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { v4 as uuidv4 } from 'uuid'
 
 const initialState = {
-    tasks: {
-        task1: {
+    'tasks': {
+        'task1': {
             id: 'task1',
             content: 'Card 1',
         },
-        task2: {
+        'task2': {
             id: 'task2',
             content: 'Card 2',
         },
-        task3: {
+        'task3': {
             id: 'task3',
             content: 'Card 3',
         },
-        task4: {
+        'task4': {
             id: 'task4',
             content: 'Card 4',
         },
     },
-    columns: {
-        ToDo: {
-            id: uuidv4(),
+    'columns': {
+        'ToDo': {
+            id: 'ToDo',
             title: 'To Do',
             taskIds: ['task1', 'task2', 'task3', 'task4'],
         },
-        InProgress: {
-            id: uuidv4(),
+        'InProgress': {
+            id: 'InProgress',
             title: 'In Progress',
             taskIds: [],
         },
-        Done: {
-            id: uuidv4(),
+        'Done': {
+            id: 'Done',
             title: 'Done',
             taskIds: [],
         },
     },
-    columnOrder: ['ToDo', 'InProgress', 'Done'],
+    'columnOrder': ['ToDo', 'InProgress', 'Done'],
 }
 
 // [e.target.value]: {} // para agarrar el nombre que se le puso a la columna
@@ -47,12 +46,12 @@ const kanbanSlice = createSlice({
     initialState,
     reducers: {
         addList: (state, action) => {
-            state.columns[action.payload] = {
-                id: uuidv4(),
-                title: action.payload,
-                taskIds: [],
-            }
-            state.columnOrder.push(action.payload)
+            // state.columns[action.payload] = {
+            //     id: uuidv4(),
+            //     title: action.payload,
+            //     taskIds: [],
+            // }
+            // state.columnOrder.push(action.payload)
         }
     },
 })

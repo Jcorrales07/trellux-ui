@@ -7,19 +7,20 @@
 
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
 import KanbanColumn from './KanbanColumn'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import '../css/BoardGrid.css'
 // Creo que si voy a usar REDUX
 // Simulando el estado de las listas
 
+import initialData from './initialData'
+
 const KanbanGrid = () => {
-    const kanbanState = useSelector((state) => state.kanban)
-    console.log('initial state', kanbanState)
-    // console.log(kanbanState.columnOrder)
-    // El setLists lo voy a usar cuando se agregue una nueva lista al estado de redux y asi se actualizan las listas
-    const [lists, setLists] = useState(kanbanState)
+    // const kanbanState = useSelector((state) => state.kanban) // state de prueba
+    const kanbanState = initialData
+
+    const [listState, setListState] = useState(kanbanState)
 
     return (
         //h-[86.3vh]
@@ -36,15 +37,14 @@ const KanbanGrid = () => {
                         id="scrollbarRounded"
                         className="h-[86.3vh] w-full p-5 flex flex-row overflow-scroll scrollbar-track-slate-950 scrollbar-track-rounded-full scrollbar-thumb-slate-700 scrollbar-thin scrollbar-w-1.5 scrollbar-corner-indigo-700 scrollbar-corner-rounded-full"
                     >
-                        {lists.columnOrder.map((columnId, index) => {
-                            // console.log('columnId', columnId)
-                            const column = lists.columns[columnId]
-                            const tasks = lists.columns[columnId].taskIds.map(
-                                (taskId) => lists.tasks[taskId]
-                            )
+                        {listState.columnOrder.map((columnId, index) => {
+                            const column = listState.columns[columnId]
+                            const tasks = listState.columns[
+                                columnId
+                            ].taskIds.map((taskId) => listState.tasks[taskId])
 
-                            // console.log('column', column)
-                            // console.log('tasks', tasks)
+                            console.log('tasks', tasks)
+
                             return (
                                 <KanbanColumn
                                     key={column.id}
@@ -62,7 +62,7 @@ const KanbanGrid = () => {
                                 columnId={'addColumn'}
                                 column={null}
                                 tasks={null}
-                                index={lists.columnOrder.length}
+                                index={listState.columnOrder.length}
                             />
                         </div>
                         {provided.placeholder}
@@ -87,83 +87,67 @@ const KanbanGrid = () => {
             return
         }
 
-        // Si muevo una lista en otro orden
-        if (type === 'list') {
-            const newListOrder = Array.from(lists.columnOrder)
+        // Orden de las listas (columnas)
+        if (destination.droppableId === 'kanban-grid' && type === 'list') {
+            console.log('Antiguo orden de las listas', listState.columnOrder)
+            const newListOrder = Array.from(listState.columnOrder)
+            
             newListOrder.splice(source.index, 1)
+            console.log('eliminacion', newListOrder)
+
             newListOrder.splice(destination.index, 0, draggableId)
+            console.log('insercion', newListOrder)
+
+            console.log('Nuevo orden de las listas', newListOrder)
 
             const newState = {
-                ...lists,
+                ...listState,
                 columnOrder: newListOrder,
             }
 
-            setLists(newState)
+            console.log('actualizacion del estado', newState)
+
+            setListState(newState)
             return
         }
 
-        console.log('source', source)
-        console.log('destination', destination)
-        const columnStart = kanbanState.columns[source.droppableId]
-        const columnFinish = kanbanState.columns[destination.droppableId]
+        // Orden de las tareas (cards)
+        if (destination.droppableId === source.droppableId) {
+            // console.log('entrooooooooooooooooooooooooooo')
 
-        // Si muevo una tarea en la misma lista
-        if (columnStart === columnFinish) {
-            const newTaskIds = Array.from(columnStart.taskIds)
-            newTaskIds.splice(source.index, 1)
-            newTaskIds.splice(destination.index, 0, draggableId)
+            console.log(
+                'tarea movida en la misma columna',
+                destination.droppableId,
+                source.droppableId,
+                type
+            )
+            const columnModified = listState.columns[source.droppableId]
+            const newTaskIdsArr = Array.from(columnModified.taskIds)
+
+            newTaskIdsArr.splice(source.index, 1)
+            newTaskIdsArr.splice(destination.index, 0, draggableId)
 
             const newColumn = {
-                ...columnStart,
-                taskIds: newTaskIds,
+                ...columnModified,
+                taskIds: newTaskIdsArr,
             }
 
-            console.log('newColumn', newColumn)
-            console.log('newColumn.title', newColumn.title.replace(' ', ''))
-
-            //PROBLEMAS
             const newState = {
-                ...kanbanState,
+                ...listState,
                 columns: {
-                    ...kanbanState.columns,
-                    [newColumn.title.replace(' ', '')]: newColumn,
+                    ...listState.columns,
+                    [source.droppableId]: newColumn,
                 },
             }
 
-            console.log('newState', newState)
+            console.log(newState.columns)
 
-            setLists(newState)
+            console.log(listState, newState)
+
+            setListState(newState)
+
             return
         }
-
-        // Si muevo una tarea
-        const startTaskIds = Array.from(columnStart.taskIds)
-        startTaskIds.splice(source.index, 1)
-
-        const newStart = {
-            ...columnStart,
-            taskIds: startTaskIds,
-        }
-
-        const finishTaskIds = Array.from(columnFinish.taskIds)
-        finishTaskIds.splice(destination.index, 0, draggableId)
-
-        const newFinish = {
-            ...columnFinish,
-            taskIds: finishTaskIds,
-        }
-
-        const newState = {
-            ...kanbanState,
-            columns: {
-                ...kanbanState.columns,
-                [newStart.title.replace(' ', '')]: newStart,
-                [newFinish.title.replace(' ', '')]: newFinish,
-            },
-        }
-
-        setLists(newState)
-        //PROBLEMAS
     }
 }
 

@@ -13,15 +13,19 @@ const KanbanBoard = () => {
     dispatch(setBoard(kanbanId))
 
     const kanban = useSelector((state) => state.boards.selectedBoard)
-    console.log('kanban', kanban)
+    // console.log('kanban', kanban)
 
     return (
         <div
             className="m-auto max-h-[100vh] bg-cover"
             style={{ backgroundImage: `url(${kanban.bgUrl})` }}
         >
+            {/* Navbars necesarios */}
             <NavbarBoard />
-            <NavbarKanban kanban={kanban} />
+            {/* Este le da el nombre del kanban actual */}
+            <NavbarKanban kanban={kanban} /> 
+
+            {/* Cuando abro un kan ban, ocupo todas las targetas necesarias */}
             <KanbanGrid />
         </div>
     )

@@ -6,7 +6,6 @@ import usersReducer from '../slices/users.slice'
 import boardsReducer from '../slices/boards.slice'
 import kanbanReducer from '../slices/kanban.slice'
 
-
 const persistConfig = {
     key: 'root',
     storage,
